@@ -11,6 +11,7 @@ if (!class_exists('db')){
 }
 
 class marker {
+	var $sysid;
 	var $database;
 	var $mapno;
 	var $type;

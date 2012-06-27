@@ -10,10 +10,10 @@
 require_once('config.php');
 
 if ( !isset($_POST['mapno']) || $_POST['mapno'] == '' ) {
-	die('no map number specified');
+	error('no map number specified');
 }
 if ( !isset($_POST['type']) || $_POST['type'] == '' ) {
-	die('no type specified');
+	error('no type specified');
 }
 
 // MANDATORY
@@ -60,5 +60,5 @@ $sql = "INSERT INTO `markers` "
 
 if(!$result=$DB->query($sql)){
 	header("HTTP/1.0 500 Error");
-	die($DB->get_error());
+	error($DB->get_error());
 } //update into is supposed to either insert a new one if it doesnt exist or if it does meet an error based on the duplicate key blockno_key then to update that one so should never get a 404
