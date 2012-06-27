@@ -43,12 +43,17 @@
  * @param {DNCMarkerOptions} [opt_options] The optional parameters.
  */
  
-/*function customMap(opt_options) {
-	this.markers = new Array();
-}
-customMap.prototype = new google.maps.Map();*/
 
-google.maps.Marker.prototype.dncmarkers = new Array(); // Finish this.
+google.maps.Map.prototype.getDNCMarker = function(sysid){
+	for (marker in this.dncmarkers) {
+		if (marker.sysid == sysid){
+			return marker;
+		}
+	}
+	return false;
+}
+
+google.maps.Map.prototype.dncmarkers = new Array(); 
 	
 function DNCMarker(opt_options) {
 	opt_options = opt_options || {};

@@ -7,10 +7,10 @@
  */
  
 if (!class_exists('db')){
-	require_once(INCLUDES . '\class-db.php');
+	require_once(INCLUDES . '/class-db.php');
 }
 if (!class_exists('marker')){
-	require_once(INCLUDES . '\class-marker.php');
+	require_once(INCLUDES . '/class-marker.php');
 }
 
 class map {

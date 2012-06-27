@@ -7,7 +7,7 @@
  */
  
 if (!class_exists('db')){
-	require_once(INCLUDES . '\class-db.php');
+	require_once(INCLUDES . '/class-db.php');
 }
 
 class marker {
@@ -25,7 +25,8 @@ class marker {
 	var $postcode;
 	
 	// Contructor
-	function __construct($mapno,$type,$lat,$lng,$blockno,$subpremise,$streetno,$street,$suburb,$state,$postcode,$editable=FALSE){
+	function __construct($sysid,$mapno,$type,$lat,$lng,$blockno,$subpremise,$streetno,$street,$suburb,$state,$postcode,$editable=FALSE){
+		$this->sysid = $sysid;
 		$this->mapno = $mapno;
 		$this->type = $type;
 		$this->lat = $lat;
@@ -48,6 +49,10 @@ class marker {
 		$this->shortaddress = $this->subpremise . ($this->subpremise ? '/' : '')	
 							. $this->streetno;
 	}	
+	
+	function getSysID(){
+		return $this->sysid;
+	}
 
 	function getMapno(){
 		return $this->mapno;
