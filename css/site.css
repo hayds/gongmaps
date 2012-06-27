@@ -1,0 +1,76 @@
+/*Clearfix Hack*/
+.clearfix:after{
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.clearfix{ display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix{ display: block; }
+/* close commented backslash hack */
+
+/* Map Page */
+#mappage .ui-content {padding:0;}
+#mappage .ui-content #gmap_canvas{ height:290px; width:100%;}
+/*.ui-icon-track { background-image: url("../images/icons/track.png");}*/
+#mappage .ui-footer label.ui-slider{ font-weight:bold; font-size:14px;}
+#mappage .ui-footer .ui-block-b{ text-align:right;}
+#mappage .ui-footer .ui-block-b .ui-slider{margin-right:0px;} 
+.ui-footer, .ui-grid-a, .ui-grid-b, .ui-grid-c, .ui-grid-d{ overflow:visible;}
+.blockno{ font-family:Arial !important; /*font-size:16px;*/ font-weight:bold; color:#000; position:relative;}
+.blockno .delete_button{ position:absolute; right:-15px; top:-15px;}
+
+.align-right{ text-align:right;}
+ul.styled { list-style:none; margin:0;  }
+ul.styled li{}
+ul.styled span.middle{}
+#dnclist{ padding:0;}
+
+/* Fix for JqueryMobile and Googlemaps v3 infowindow css issue*/
+#gmap_canvas img {
+	max-width: none;
+}
+
+.markerwithlabel {
+	color: red;
+	background-color: white;
+	font-family: "Lucida Grande", "Arial", sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	text-align: center;
+	padding:1px 3px;  
+	border: 1px solid black;
+	white-space: nowrap;
+}
+
+.pac-container:after { content:"" !important;}
+.pac-container{ font-size:70%;}
+.pac-item { white-space:normal; padding:5px;}
+/* Additional css for the google maps autocomplete object*/
+/*.pac-container,
+.ui-body-c,
+.ui-body-c input,
+.ui-body-c select,
+.ui-body-c textarea,
+.ui-body-c button {
+	font-family: Helvetica, Arial, sans-serif ;
+}
+
+.pac-container,
+.ui-body-c,
+.ui-overlay-c {
+	border: 1px solid 		#aaa ;
+	color: 					#333333 ;
+	text-shadow: 0  1px  0  #fff ;
+	background: 			#f9f9f9 ;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #f9f9f9 ), to( #eeeeee )); 
+	background-image: -webkit-linear-gradient( #f9f9f9 , #eeeeee ); 
+	background-image:    -moz-linear-gradient( #f9f9f9 , #eeeeee ); 
+	background-image:     -ms-linear-gradient( #f9f9f9 , #eeeeee ); 
+	background-image:      -o-linear-gradient( #f9f9f9 , #eeeeee ); 
+	background-image:         linear-gradient( #f9f9f9 , #eeeeee );
+}*/

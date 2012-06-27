@@ -1,0 +1,11 @@
+http://www.the-di-lab.com/polygon/
+
+
+
+    <script type="text/javascript">	
+		/*$("a[rel=external], a[data-ajax=false]").live('click', function(e){
+			e.preventDefault();
+		    window.location.href=this.href;
+			alert('yo');
+		 });*/
+	</script>

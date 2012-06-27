@@ -1,0 +1,38 @@
+# Turn rewrite on
+RewriteEngine On
+# Set base to / else it tries to deliver the filepath ie www.litehouse.com.au/c:\wamp\www\the\rest\of\the\url.php
+RewriteBase  /
+RewriteRule ^map/([0-9]+)/.*$ map.php?mapno=$1 [L,QSA]
+RewriteRule ^master/([0-9]+)/.*$ master.php?mapno=$1 [L,QSA]
+
+#
+RewriteRule ^([a-z]+)$ $1.php [L,QSA]
+
+# http://httpd.apache.org/docs/2.0/mod/mod_rewrite.html#rewriterule
+#
+#Text:
+#  .           Any single character
+#  [chars]     Character class: Any character of the class ``chars''
+#  [^chars]    Character class: Not a character of the class ``chars''
+#  text1|text2 Alternative: text1 or text2
+#
+#Quantifiers:
+#  ?           0 or 1 occurrences of the preceding text
+#  *           0 or N occurrences of the preceding text (N > 0)
+#  +           1 or N occurrences of the preceding text (N > 1)
+#
+#Grouping:
+#  (text)      Grouping of text
+#             (used either to set the borders of an alternative as above, or
+#              to make backreferences, where the Nth group can
+#              be referred to on the RHS of a RewriteRule as $N)
+#
+#Anchors:
+#  ^           Start-of-line anchor
+#  $           End-of-line anchor
+#
+#Escaping:
+#  \char       escape the given char
+#              (for instance, to specify the chars ".[]()" etc.)
+
+# Using [R] is a great way to debug as it does a redirect to that page
