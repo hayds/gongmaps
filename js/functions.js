@@ -36,7 +36,7 @@ function dnc_marker_image(){
 
 function dnc_marker_shadow(){
 	var shadow = new google.maps.MarkerImage(
-	  'marker-images/shadow.png',
+	  '/images/markers/dnc/shadow.png',
 	  new google.maps.Size(40,34),
 	  new google.maps.Point(0,0),
 	  new google.maps.Point(10,34)

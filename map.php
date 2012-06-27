@@ -136,39 +136,80 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 		
 		$("#accept_button").click(function(){
 			var place = autocomplete.getPlace();
-			var dncmarker = new DNCMarker({
+			var address=new Array();
+			if (place.address_components){
+				for (i=0; i < place.address_components.length; i++) {
+					switch(place.address_components[i].types[0])
+					{
+					case 'subpremise':
+					  address['subpremise']=place.address_components[i].short_name;
+					  break;
+					case 'street_number':
+					  address['streetno']=place.address_components[i].short_name;
+					  break;
+					case 'route': //street name
+					  address['street']=place.address_components[i].short_name;
+					  break;	
+					case 'locality': //suburb
+					  address['suburb']=place.address_components[i].short_name;
+					  break;
+					case 'administrative_area_level_1': //state
+					  address['state']=place.address_components[i].short_name;
+					  break;		  
+					case 'postal_code':
+					  address['postcode']=place.address_components[i].short_name;
+					  break;			  
+				    }
+			    }
+			}
+
+			if (!address['streetno']){ 
+				alert('sorry that address does not exist'); 
+				return false;
+			}
+
+			var dncmarker=new DNCMarker({
 			    icon: dnc_marker_image(),
 			    shadow: dnc_marker_shadow(),
 			    shape: dnc_marker_shape(),
 				position: place.geometry.location,
 				map: myMap,
-				address: place.address_components,
+				subpremise: address['subpremise'],
+				streetno: address['streetno'],
+				street: address['street'],
+				suburb: address['suburb'],
+				state: address['state'],
+				postcode: address['postcode'],
 				labelClass: 'markerwithlabel',
+			});	
+			dncmarker.save({
+				onsuccess: function(){
+					//Reload the DNC list with the new entry
+					$("#dnclist").load("/map-ajax-dnclist.php?mapno=" + mapno, function(response, status, xhr) {
+						if (status == "error") {
+							alert("Sorry but there was an error: " + xhr.status + " " + xhr.statusText);
+						} else {
+							$("#dnclist").trigger("create"); //apply jquery mobile visualizations to new markup
+						}
+					});
+				}
 			});
-			var infoWindowOptions = {content: dncmarker.fulladdress};
-			var infoWindow = new google.maps.InfoWindow(infoWindowOptions);
-			google.maps.event.addListener(dncmarker, 'click', function() {
-				infoWindow.open(myMap,this);
-			});
-			dncmarker.save();
 		});
 		
-		$("#dnclist a").click(function(){
-			/*
-			var id = $(this).attr(id);
+		$("#dnclist").on("click", "a", function(){
+			var sysid = $(this).attr("data-sysid");
 			$.ajax({
 				url: '/marker-delete.php',
 				type: 'POST',
-				data: 'id='+id,
+				data: 'sysid='+sysid,
+				context: $(this),
 				success: function(){
-					$(this).remove();
+					$(this).parent().remove();
 					},
 				error: function(){
 					alert('error');
-					that.setMap(); // If it fails to save then take the marker off the map
 				}	
-			});*/
-			
+			});			
 		});
 	});	
 </script>
@@ -215,11 +256,11 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	<div data-role="content">
         <div data-role="fieldcontain">
             <label for="address_input" class="ui-hidden-accessible">Address:</label>
-            <input type="search" name="address_input" id="address_input" value="" placeholder="Enter new DNC Address"/>            
-        </div>
-        <div data-role="fieldcontain" class="align-right">
-        	<a id="accept_button" href="#" data-role="button" data-icon="check" data-iconpos="notext" data-mini="true" data-inline="true"></a>
-        </div>
+            <input type="search" name="address_input" id="address_input" value="" placeholder="Enter new DNC Address"/>     
+            <div class="align-right">
+        		<a id="accept_button" href="#" data-role="button" data-icon="plus" data-inline="true" data-mini="true">Add DNC</a>
+        	</div>      
+        </div>        
         <ul id="dnclist" class="styled">
         <?php $map->genDNCList(); ?>
         </ul>

@@ -7,10 +7,10 @@
  */
  
 if (!class_exists('db')){
-	require_once(INCLUDES . '/class-db.php');
+	require_once(INCLUDES . '\class-db.php');
 }
 if (!class_exists('marker')){
-	require_once(INCLUDES . '/class-marker.php');
+	require_once(INCLUDES . '\class-marker.php');
 }
 
 class map {
@@ -63,6 +63,7 @@ class map {
 		if ($results = $this->database->get_results($sql)){
 			foreach ( $results as $key => $val){
 				$blockmarkers[] = new marker(
+					$val['sysid'],
 					$val['mapno'],
 					$val['type'],
 					$val['lat'],
@@ -91,6 +92,7 @@ class map {
 		if ($results = $this->database->get_results($sql)){
 			foreach ( $results as $key => $val){
 				$dncmarkers[] = new marker(
+					$val['sysid'],
 					$val['mapno'],
 					$val['type'],
 					$val['lat'],
@@ -112,7 +114,7 @@ class map {
 	function genDNCList(){
 		$dncmarkers = $this->getDNCMarkers();
 		foreach ($dncmarkers as $dncmarker){
-			echo "	<li><a href=\"#\" data-icon=\"delete\" data-role=\"button\" data-inline=\"true\" data-mini=\"true\" data-iconpos=\"notext\"></a>" . $dncmarker->getFullAddress() . "</li>\n";
+			echo "	<li><a data-sysid=\"" . $dncmarker->getSysID() . "\" href=\"#\" data-icon=\"delete\" data-role=\"button\" data-inline=\"true\" data-mini=\"true\" data-iconpos=\"notext\"></a>" . $dncmarker->getFullAddress() . "</li>\n";
 		}
 	}
 	
@@ -133,7 +135,9 @@ class map {
 			   . "	state:'$dncmarker->state',\n"			   
 			   . "	postcode:'$dncmarker->postcode',\n"
 			   . "	labelClass: 'markerwithlabel',\n"
-			   . "});\n"
+			   . "});\n";
+			   
+			   /*
 			   . "(function(){\n"
 			   . "	var infoWindowOptions = {content: '".$dncmarker->getFullAddress()."'};\n"
 			   . "	var infoWindow = new google.maps.InfoWindow(infoWindowOptions);\n"
@@ -141,19 +145,7 @@ class map {
 			   . "		infoWindow.open(myMap,this);\n"
 			   . "	});\n"
 			   . "})();";
-		}
-	}
-	
-	function genDNCMarkersOLD(){
-		$dncmarkers = $this->getDNCMarkers();
-		foreach ($dncmarkers as $dncmarker){	
-			echo "var position=new google.maps.LatLng(".$dncmarker->getLat().",".$dncmarker->getLng().");\n"
-			   . "var dncmarker = createDNCMarker(position);"
-			   . "var infoWindowOptions = {content: '".$dncmarker->getFullAddress()."'};\n"
-			   . "var infoWindow = new google.maps.InfoWindow(infoWindowOptions);\n"
-			   . "google.maps.event.addListener(dncmarker, 'click', function() {\n"
-			   . "	infoWindow.open(myMap,dncmarker);\n"
-			   . "});\n";	   
+			   */
 		}
 	}
 	
