@@ -19,16 +19,10 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	<link rel="stylesheet" href="/min/f=css/site.css" />    
     
 	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<!--<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>-->
 	<script src="/min/f=js/jquery.mobile-1.1.0.js"></script>
     <script src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry,places" type="text/javascript"></script>
-	<script src="/min/f=js/functions.js,js/class-mappolygon.js,js/class-blockmarker.js,js/class-dncmarker.js"></script>
-</head>
-<body class="ui-body-c"><!--Watch out for this ui-body-c this is hard coded-->
-
-<div data-role="page" id="mappage">
-
-<script type="text/javascript">
+	<script src="/min/f=js/functions.js,js/class-mappolygon.js,js/class-blockmarker.js,js/class-dncmarker.js&debug=1"></script>
+    <script type="text/javascript">
 	var myMap; 					// declare the map variable globally
 	var myBounds; 				// declare the bounds variable globally
 	var polygon;				// declare the bounds variable globally
@@ -53,7 +47,6 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 		<?php $map->genDNCMarkersJS(); ?>
 		update_bounds();
 	}
-	
 	
 	// zooms and centers the map to fit the current polygon and your current location if tracking is on
 	// assumes polygon, mybounds and currentLatLng exist
@@ -85,8 +78,8 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	
 	// JQuery mobile equivalent to doc ready function
 	$("#mappage").live('pageinit',function(event){
-		// Load the map
-		initialize_gmap();
+		// Load the map. Note: This has to go here because this is the jquery mobile equiv of doc ready so the map canvas div exists at this point
+		if (!myMap){initialize_gmap();}
 		
 		// Tracking flipper
 		$("#flip-tracking").change(function(){
@@ -110,7 +103,10 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	
 	// JQuery mobile equivalent to doc ready function
 	$("#dncpage").live('pageinit',function(event){
-										   
+		// Load the map. Note: This has to go here because this is the jquery mobile equiv of doc ready so the map canvas div exists at this point
+		// This must be triggered here in case you reload the application @ #dncpage. If not put here then myMap will not exist as a gmap and will cause errors when a marker is added or removed.
+		if (!myMap){initialize_gmap();}
+
 		// MAKE THE ACCEPT BUTTON DISSAPEAR WHEN NEEDED
 	    $("#accept_button").hide();
 		$("#address_input").parent().find('a').click(function(){
@@ -182,6 +178,7 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 				postcode: address['postcode'],
 				labelClass: 'markerwithlabel',
 			});	
+			
 			dncmarker.save({
 				onsuccess: function(){
 					//Reload the DNC list with the new entry
@@ -194,25 +191,24 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 					});
 				}
 			});
+			
 		});
 		
-		$("#dnclist").on("click", "a", function(){
-			var sysid = $(this).attr("data-sysid");
-			$.ajax({
-				url: '/marker-delete.php',
-				type: 'POST',
-				data: 'sysid='+sysid,
-				context: $(this),
-				success: function(){
-					$(this).parent().remove();
-					},
-				error: function(){
-					alert('error');
-				}	
-			});			
+		$("#dnclist").on("click", "a", function(){		
+			var sysid = $(this).attr("data-sysid"); //get the sysid of the marker out of the link
+			var thelink=$(this);
+			myMap.getDNCMarker(sysid).remove({ // get the marker from the map based on the id and call the remove function to delete it form the db and take it off the map
+				onsuccess: function(){
+					thelink.parent().remove(); // if it succeeds, remove the link from the dom
+				}
+			});
 		});
 	});	
-</script>
+	</script>
+</head>
+<body class="ui-body-c"><!--Watch out for this ui-body-c this is hard coded-->
+
+<div data-role="page" id="mappage">
 
 	<div data-role="header" data-theme="b">
 	    <a data-transition="reverse flow" href="/index.php" data-icon="home" data-ajax="false">Home</a>

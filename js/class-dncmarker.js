@@ -45,9 +45,10 @@
  
 
 google.maps.Map.prototype.getDNCMarker = function(sysid){
-	for (marker in this.dncmarkers) {
-		if (marker.sysid == sysid){
-			return marker;
+	var length=this.dncmarkers.length;
+	for (i=0; i<length; i++) {
+		if (this.dncmarkers[i].sysid == sysid){
+			return this.dncmarkers[i];
 		}
 	}
 	return false;
@@ -57,13 +58,13 @@ google.maps.Map.prototype.dncmarkers = new Array();
 	
 function DNCMarker(opt_options) {
 	opt_options = opt_options || {};
+	opt_options.sysid = opt_options.sysid || "";
 	opt_options.subpremise = opt_options.subpremise || "";
 	opt_options.streetno = opt_options.streetno || "";
 	opt_options.street = opt_options.street || "";
 	opt_options.suburb = opt_options.suburb || "";	
 	opt_options.state = opt_options.state || "";
 	opt_options.postcode = opt_options.postcode || "";
-	opt_options.map = opt_options.map || myMap;
 	
 	opt_options.labelAnchor = opt_options.labelAnchor || new google.maps.Point(0, 0);
 	opt_options.labelClass = opt_options.labelClass || "markerLabels";
@@ -99,7 +100,7 @@ DNCMarker.prototype = new google.maps.Marker();
 DNCMarker.prototype.setMap = function (theMap) {
 	// Call the inherited function...
 	google.maps.Marker.prototype.setMap.apply(this, arguments);
-	
+
 	// ... then deal with the label:
 	this.label.setMap(theMap);
 };
@@ -128,18 +129,21 @@ DNCMarker.prototype.save = function(opt_options) {
 		url: '/marker-create.php',
 		type: 'POST',
 		data: data,
-		context: this, //changed
-		success: opt_options.onsuccess,
+		context: this,
+		success: function(data, textStatus, jqXHR){
+			this.sysid = data;
+			opt_options.onsuccess.call();
+			},
 		error: function(){
 			alert('error');
-			this.setMap(); // If it fails to save then take the marker off the map //changed
+			this.setMap(); // If it fails to save then take the marker off the map
 		}	
 	});
 };
 DNCMarker.prototype['save'] = DNCMarker.prototype.save;
 
-/*DELETE*/
-/*
+/*REMOVE or delete from DB*/
+
 DNCMarker.prototype.remove = function(opt_options) {
 	if (isNaN(mapno) || mapno=='' || mapno==null) {
 		alert('A map number has not been set yet!');
@@ -147,23 +151,14 @@ DNCMarker.prototype.remove = function(opt_options) {
 	}
 	opt_options = opt_options || {};
  	opt_options.onsuccess = opt_options.onsuccess || "";	
-	var data = 'mapno=' + mapno +
-				'&type=dnc' +
-				'&lat=' + this.getPosition().lat() +
-				'&lng=' + this.getPosition().lng() +
-				'&subpremise=' + this.subpremise +
-				'&streetno=' + this.streetno +
-				'&street=' + this.street +
-				'&suburb=' + this.suburb +
-				'&state=' + this.state +				 
-				'&postcode=' + this.postcode;
 	$.ajax({
 		url: '/marker-delete.php',
 		type: 'POST',
-		data: data,
-		context: this, //changed
+		data: 'sysid='+this.sysid,
+		context: this,
 		success: function(){
 			this.setMap();
+			opt_options.onsuccess.call();	
 		},
 		error: function(){
 			alert('error');			
@@ -171,7 +166,7 @@ DNCMarker.prototype.remove = function(opt_options) {
 	});
 };
 DNCMarker.prototype['remove'] = DNCMarker.prototype.remove;
-*/
+
 
 
 /**

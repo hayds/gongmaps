@@ -15,7 +15,7 @@
 
 define('APPNAME', 'Gongmaps');
 
-define('VERSION', '1.2');
+define('VERSION', '1.3');
  
 // Set ROOT to current directory of this file
 define('ROOT', dirname(__FILE__));

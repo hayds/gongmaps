@@ -123,29 +123,20 @@ class map {
 		foreach ($dncmarkers as $dncmarker){	
 			echo "var position=new google.maps.LatLng(".$dncmarker->getLat().",".$dncmarker->getLng().");\n"
 			   . "var dncmarker = new DNCMarker({\n"
+			   . "	sysid: '$dncmarker->sysid',\n"												
 			   . "	icon: dnc_marker_image(),\n"
 			   . "	shadow: dnc_marker_shadow(),\n"
 			   . "	shape: dnc_marker_shape(),\n"			   
 			   . "	position: position,\n"
 			   . "	map: myMap,\n"
-			   . "	subpremise:'$dncmarker->subpremise',\n"
-			   . "	streetno:'$dncmarker->streetno',\n"
-			   . "	street:'$dncmarker->street',\n"
-			   . "	suburb:'$dncmarker->suburb',\n"
-			   . "	state:'$dncmarker->state',\n"			   
-			   . "	postcode:'$dncmarker->postcode',\n"
+			   . "	subpremise: '$dncmarker->subpremise',\n"
+			   . "	streetno: '$dncmarker->streetno',\n"
+			   . "	street: '$dncmarker->street',\n"
+			   . "	suburb: '$dncmarker->suburb',\n"
+			   . "	state: '$dncmarker->state',\n"			   
+			   . "	postcode: '$dncmarker->postcode',\n"
 			   . "	labelClass: 'markerwithlabel',\n"
 			   . "});\n";
-			   
-			   /*
-			   . "(function(){\n"
-			   . "	var infoWindowOptions = {content: '".$dncmarker->getFullAddress()."'};\n"
-			   . "	var infoWindow = new google.maps.InfoWindow(infoWindowOptions);\n"
-			   . "	google.maps.event.addListener(dncmarker, 'click', function() {\n"
-			   . "		infoWindow.open(myMap,this);\n"
-			   . "	});\n"
-			   . "})();";
-			   */
 		}
 	}
 	

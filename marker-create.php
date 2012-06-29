@@ -62,3 +62,5 @@ if(!$result=$DB->query($sql)){
 	header("HTTP/1.0 500 Error");
 	error($DB->get_error());
 } //update into is supposed to either insert a new one if it doesnt exist or if it does meet an error based on the duplicate key blockno_key then to update that one so should never get a 404
+
+echo mysql_insert_id();

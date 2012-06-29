@@ -39,8 +39,7 @@ if ($sysid){
 	$sql = "DELETE FROM markers "
 		 . "WHERE "
 		 . "`sysid`='$sysid';";
-}
-else {
+} else {
 	//gen sql
 	$sql = "DELETE FROM markers "
 		 . "WHERE "

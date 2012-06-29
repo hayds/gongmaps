@@ -10,7 +10,6 @@ function labelMarker(options) {
 	
 	// Explicity set the instance of the labelMarker to the map you specified in options
 	this.setMap(this.map);
-	console.log(this);
 }
 
 // Overload labelMarker to a new instance of google.maps.OverlayView
