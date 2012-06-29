@@ -108,8 +108,9 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 		if (!myMap){initialize_gmap();}
 
 		// MAKE THE ACCEPT BUTTON DISSAPEAR WHEN NEEDED
-	    $("#accept_button").hide();
-		$("#address_input").parent().find('a').click(function(){
+		var clearButton = $("#address_input").parent().find('a');
+	    $("#accept_button").hide(); // initially hide it
+		clearButton.click(function(){ //when you click the cross in the search field then hide it.
 			$("#accept_button").hide();
 		});
 		$("#address_input").keydown(function(){
@@ -163,7 +164,9 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 				alert('sorry that address does not exist'); 
 				return false;
 			}
-
+			
+			clearButton.click(); //its a valid address so continue on and also clear the search form
+			
 			var dncmarker=new DNCMarker({
 			    icon: dnc_marker_image(),
 			    shadow: dnc_marker_shadow(),
