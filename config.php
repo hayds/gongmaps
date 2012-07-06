@@ -9,13 +9,13 @@
  */
 
 
-/**
+/** 
  * Constants
  */
 
 define('APPNAME', 'Gongmaps');
 
-define('VERSION', '1.3');
+define('VERSION', '1.4');
  
 // Set ROOT to current directory of this file
 define('ROOT', dirname(__FILE__));

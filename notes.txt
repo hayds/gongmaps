@@ -1,11 +1,8 @@
-http://www.the-di-lab.com/polygon/
-
-
-
-    <script type="text/javascript">	
-		/*$("a[rel=external], a[data-ajax=false]").live('click', function(e){
-			e.preventDefault();
-		    window.location.href=this.href;
-			alert('yo');
-		 });*/
-	</script>
+master page make blocks work
+Speed it all up
+Make correct height of map
+Add pin lock, 3 attempts fails for 24 hrs
+Make tracking when you turn it on zoom out and show marker. On update location just move marker.
+list all streets within the polygon?
+add loading graphic on update address list
+s

@@ -13,28 +13,26 @@
 .clearfix{ display: block; }
 /* close commented backslash hack */
 
+
+/* Styled List */
+ul.styled { list-style:none; margin:0;  }
+ul.styled li{}
+ul.styled span.middle{}
+
+
 /* Map Page */
 #mappage .ui-content {padding:0;}
-#mappage .ui-content #gmap_canvas{ height:290px; width:100%;}
+#mappage .ui-content #gmap_canvas{ width:100%;}
+#gmap_canvas img {max-width: none;} /* Fix for JqueryMobile and Googlemaps v3 infowindow css issue*/
 /*.ui-icon-track { background-image: url("../images/icons/track.png");}*/
 #mappage .ui-footer label.ui-slider{ font-weight:bold; font-size:14px;}
 #mappage .ui-footer .ui-block-b{ text-align:right;}
 #mappage .ui-footer .ui-block-b .ui-slider{margin-right:0px;} 
+#mappage .blockno{ font-family:Arial !important; font-weight:bold; color:#000; position:relative;}
+#mappage .blockno .delete_button{ position:absolute; right:-15px; top:-15px;}
+.ui-input-search {width: 95%;}
 .ui-footer, .ui-grid-a, .ui-grid-b, .ui-grid-c, .ui-grid-d{ overflow:visible;}
-.blockno{ font-family:Arial !important; /*font-size:16px;*/ font-weight:bold; color:#000; position:relative;}
-.blockno .delete_button{ position:absolute; right:-15px; top:-15px;}
-
 .align-right{ text-align:right;}
-ul.styled { list-style:none; margin:0;  }
-ul.styled li{}
-ul.styled span.middle{}
-#dnclist{ padding:0;}
-
-/* Fix for JqueryMobile and Googlemaps v3 infowindow css issue*/
-#gmap_canvas img {
-	max-width: none;
-}
-
 .markerwithlabel {
 	color: red;
 	background-color: white;
@@ -47,10 +45,15 @@ ul.styled span.middle{}
 	white-space: nowrap;
 }
 
+
+/* DNC Page */
+#dncpage #dnclist{ padding:0;}
+#dncpage .ui-input-search { width: 95%; }
+
+/* places auto complete*/
 .pac-container:after { content:"" !important;}
 .pac-container{ font-size:70%;}
 .pac-item { white-space:normal; padding:5px;}
-/* Additional css for the google maps autocomplete object*/
 /*.pac-container,
 .ui-body-c,
 .ui-body-c input,

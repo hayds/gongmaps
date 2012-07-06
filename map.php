@@ -13,7 +13,7 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 <html>
 	<head> 
 	<title>Map <?php echo $map->getMapno(); ?></title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
     <meta name="apple-mobile-web-app-capable" content="yes" />
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
 	<link rel="stylesheet" href="/min/f=css/site.css" />    
@@ -48,6 +48,10 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 		update_bounds();
 	}
 	
+	function resize_content(){
+		$("#content").height( $(window).height() - $("#header").outerHeight() - $("#footer").outerHeight() );
+	}
+	
 	// zooms and centers the map to fit the current polygon and your current location if tracking is on
 	// assumes polygon, mybounds and currentLatLng exist
 	function update_bounds(){ 
@@ -78,6 +82,7 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	
 	// JQuery mobile equivalent to doc ready function
 	$("#mappage").live('pageinit',function(event){
+							
 		// Load the map. Note: This has to go here because this is the jquery mobile equiv of doc ready so the map canvas div exists at this point
 		if (!myMap){initialize_gmap();}
 		
@@ -96,10 +101,16 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 		
 	});	
 	
-	$("#mappage").live('pageshow',function(event){		
+	$("#mappage").live('pageshow',function(event){
+		resize_content();			
 		google.maps.event.trigger(myMap, 'resize');	// forces the map to redraw which prevents the map looking wierd when hidden and reshown
 		update_bounds();
-	});	
+	});
+	
+	$(window).resize(function() {
+		resize_content();
+	});
+	
 	
 	// JQuery mobile equivalent to doc ready function
 	$("#dncpage").live('pageinit',function(event){
@@ -213,18 +224,18 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 
 <div data-role="page" id="mappage">
 
-	<div data-role="header" data-theme="b">
+	<div id="header" data-role="header" data-theme="b">
 	    <a data-transition="reverse flow" href="/index.php" data-icon="home" data-ajax="false">Home</a>
 		<h1>Map <?php echo $map->getMapno(); ?></h1>
         <a data-transition="flow" href="#dncpage" data-icon="alert">DNC's</a>
 	</div><!-- /header -->
 
-	<div data-role="content">	
+	<div id="content" data-role="content">	
     <div id="location"></div>
 		<div id="gmap_canvas"></div>
 	</div><!-- /content -->
     
-	<div data-role="footer" data-theme="c" class="ui-bar clearfix">
+	<div id="footer" data-role="footer" data-theme="c" class="ui-bar clearfix">
         <div class="ui-grid-a clearfix">
             <div class="ui-block-a">
                 <label for="flip-dnc">Show DNC's</label>

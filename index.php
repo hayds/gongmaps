@@ -3,7 +3,7 @@
 <html> 
 	<head> 
 	<title><?php echo APPNAME; ?> <?php echo VERSION; ?></title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
     <meta name="apple-mobile-web-app-capable" content="yes" />
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
 	<link rel="stylesheet" href="/min/f=css/site.css" />    
