@@ -13,16 +13,16 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 <html>
 	<head> 
 	<title>Map <?php echo $map->getMapno(); ?></title>
-  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
 	<link rel="stylesheet" href="/min/f=css/site.css" />    
     
 	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script src="/min/f=js/jquery.mobile-1.1.0.js"></script>
-  <script src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry,places" type="text/javascript"></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry,places" type="text/javascript"></script>
 	<script src="/min/f=js/functions.js,js/class-mappolygon.js,js/class-blockmarker.js,js/class-dncmarker.js&debug=1"></script>
-  <script type="text/javascript">
+    <script type="text/javascript">
 	var myMap; 					// declare the map variable globally
 	var myBounds; 				// declare the bounds variable globally
 	var polygon;				// declare the bounds variable globally
@@ -64,17 +64,28 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	}
 	
 	// gets your current GPS location from the HTML5 browser and updates currentLocationMarker
-	function updateLocation(position){
+	function updateLocation(oncomplete){
+		$("#tracking-status-icon").removeClass("ui-icon-check ui-icon-alert").addClass("ui-icon-search");	
 		console.log('updateLocation called');
-		$("#tracking-status-icon").removeClass("ui-icon-check ui-icon-alert").addClass("ui-icon-search");
-		$("#tracking-status-icon").removeClass("ui-icon-search ui-icon-alert").addClass("ui-icon-check");
-		currentLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-		if (!currentLocationMarker || currentLocationMarker==null ){ // if currentLocationMarker doesnt exist create it with the current latlng
-			currentLocationMarker = createCurrentLocationMarker(currentLatLng);
-			update_bounds();
-		} else { // else just update its latlng
-			currentLocationMarker.setPosition(currentLatLng);
-		}
+		navigator.geolocation.getCurrentPosition(
+			function(position) { // function if it works
+				$("#tracking-status-icon").removeClass("ui-icon-search ui-icon-alert").addClass("ui-icon-check");
+				currentLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				if (!currentLocationMarker || currentLocationMarker==null ){ // if currentLocationMarker doesnt exist create it with the current latlng
+					currentLocationMarker = createCurrentLocationMarker(currentLatLng); 
+				} else { // else just update its latlng
+					currentLocationMarker.setPosition(currentLatLng);
+				}
+				if ($.isFunction(oncomplete)){
+					console.log('oncomplete called');
+					oncomplete.call();
+				}			
+			},
+			function(error) {// function if it fails
+				$("#tracking-status-icon").removeClass("ui-icon-check ui-icon-search").addClass("ui-icon-alert");		
+				alert('Sorry, could not update your location... error code: '+error.code);
+			}
+		);		
 	}
 	
 	// JQuery mobile equivalent to doc ready function
@@ -88,12 +99,14 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 		$("#flip-tracking").change(function(){
 			if ($(this).val()=='on'){
 				$("#tracking-status-icon").show();
+				updateLocation(update_bounds); // because we are turning on tracking send callback to update the bounds to include the current location 
+				
 				// navigator.geolocation.watchPosition: first arg is function to run if navigator.geolocation returned a location; second arg is function to run if it failed
 				var locationChangedListener = navigator.geolocation.watchPosition(
 					updateLocation,
 					function(error){
 						$("#tracking-status-icon").removeClass("ui-icon-check ui-icon-search").addClass("ui-icon-alert");						
-						console.log('Sorry, could not update your location... error code: '+error.code);
+						alert('Sorry, could not update your location... error code: '+error.code);
 					}
 				); 
 			} else { // must be off then
@@ -138,7 +151,7 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 		
 		$("#dnclist a").hide(); //initially hide the dnc delete buttons
 		$("#edit_button").click(function(){
-			$("#dnclist a").toggle();
+			$("#dnclist").toggleClass("noteditable");
 		});
 		
 		// Load up the autocomplete for the DNC's
@@ -249,12 +262,16 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	</div><!-- /content -->
     
 	<div id="footer" data-role="footer" data-theme="c" class="ui-bar clearfix">
-      <label id="flip-tracking-label" for="flip-tracking">Tracking:</label>
+  	<div>
+      <label id="flip-tracking-label" for="flip-tracking">Tracking</label>
+      <span id="tracking-status-icon" class="ui-icon ui-icon-alert ui-icon-shadow">&nbsp;</span>
+		</div>
+    <div>
       <select id="flip-tracking" name="flip-tracking" data-role="slider" data-mini="true" data-theme="c">
           <option value="off">Off</option>
           <option value="on">On</option>
       </select>
-      <span id="tracking-status-icon" class="ui-icon ui-icon-alert ui-icon-shadow">&nbsp;</span>
+    </div>
 	</div><!-- /footer -->
 
 </div><!-- /page -->

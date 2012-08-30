@@ -130,12 +130,14 @@ DNCMarker.prototype.save = function(opt_options) {
 		type: 'POST',
 		data: data,
 		context: this,
+		beforeSend: function(){$.mobile.showPageLoadingMsg();},
+		complete: function(){$.mobile.hidePageLoadingMsg();},
 		success: function(data, textStatus, jqXHR){
 			this.sysid = data;
 			opt_options.onsuccess.call();
 			},
-		error: function(){
-			alert('error');
+		error: function(jqXHR){
+			alert('error saving marker to DB: ' + jqXHR.responseText);
 			this.setMap(); // If it fails to save then take the marker off the map
 		}	
 	});
@@ -155,13 +157,15 @@ DNCMarker.prototype.remove = function(opt_options) {
 		url: '/marker-delete.php',
 		type: 'POST',
 		data: 'sysid='+this.sysid,
+		beforeSend: function(){$.mobile.showPageLoadingMsg();},
+		complete: function(){$.mobile.hidePageLoadingMsg();},
 		context: this,
 		success: function(){
 			this.setMap();
 			opt_options.onsuccess.call();	
 		},
-		error: function(){
-			alert('error');			
+		error: function(jqXHR){
+			alert('error deleting marker from DB: '+jqXHR.responseText);			
 		}	
 	});
 };

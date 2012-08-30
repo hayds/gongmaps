@@ -68,7 +68,7 @@ class db {
 	function query( $sql ) {
 			$this->clear_error();
 		if (!$this->result = mysql_query( $sql )) {
-			$this->set_error('Query error:' . $sql);
+			$this->set_error(mysql_error() . ' ' . $sql);
 			return false;
 		} else {	
 			$this->rows = mysql_affected_rows();
@@ -80,7 +80,7 @@ class db {
 	function get_result( $sql ) {
 		$this->clear_error();		
 		if (!$this->query( $sql )){
-			$this->set_error('Query error:' . $sql);
+			$this->set_error(mysql_error() . ' ' . $sql);
 			return false;
 		} else {
 			return mysql_fetch_assoc($this->result);	
@@ -91,7 +91,7 @@ class db {
 	function get_results( $sql ) {
 		$this->clear_error();
 		if (!$this->query( $sql )){
-			$this->set_error('Query error:' . $sql);
+			$this->set_error(mysql_error() . ' ' . $sql);
 			return false;
 		} else {
 			$result = array();			

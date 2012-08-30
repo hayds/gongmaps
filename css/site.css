@@ -1,38 +1,94 @@
 /*Clearfix Hack*/
-.clearfix:after{
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0;
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
 }
-.clearfix{ display: inline-block; }
+.clearfix { display: inline-block; }
 /* start commented backslash hack \*/
 * html .clearfix { height: 1%; }
-.clearfix{ display: block; }
+.clearfix { display: block; }
 /* close commented backslash hack */
 
-
 /* Styled List */
-ul.styled { list-style:none; margin:0;  }
-ul.styled li{}
-ul.styled span.middle{}
-
-
+ul.styled {
+	list-style: none;
+	margin: 0;
+}
+ul.styled li { }
+ul.styled span.middle { }
 /* Map Page */
-#mappage .ui-content {padding:0;}
-#mappage .ui-content #gmap_canvas{ width:100%;}
-#gmap_canvas img {max-width: none;} /* Fix for JqueryMobile and Googlemaps v3 infowindow css issue*/
-/*.ui-icon-track { background-image: url("../images/icons/track.png");}*/
-#mappage .ui-footer label.ui-slider{ font-weight:bold; font-size:14px;}
-#mappage .ui-footer .ui-block-b{ text-align:right;}
-#mappage .ui-footer .ui-block-b .ui-slider{margin-right:0px;} 
-#mappage .blockno{ font-family:Arial !important; font-weight:bold; color:#000; position:relative;}
-#mappage .blockno .delete_button{ position:absolute; right:-15px; top:-15px;}
-.ui-input-search {width: 95%;}
-.ui-footer, .ui-grid-a, .ui-grid-b, .ui-grid-c, .ui-grid-d{ overflow:visible;}
-.align-right{ text-align:right;}
+#mappage .ui-content { padding: 0; }
+#mappage .ui-content #gmap_canvas {
+	width: 100%;
+	min-height: 100%;
+}
+#gmap_canvas img { max-width: none; } /* Fix for JqueryMobile and Googlemaps v3 infowindow css issue*/
+/* .ui-icon-track { background-image: url("../images/icons/track.png");} */
+#mappage .ui-footer label.ui-slider {
+	font-weight: bold;
+	font-size: 14px;
+}
+#mappage .ui-footer .ui-block-b { text-align: right; }
+#mappage .ui-footer .ui-block-b .ui-slider { margin-right: 0px; }
+#mappage .blockno {
+	font-family: Arial !important;
+	font-weight: bold;
+	color: #000;
+	position: relative;
+}
+#mappage .blockno .delete_button {
+	position: absolute;
+	right: -15px;
+	top: -15px;
+}
+#mappage #footer .ui-field-contain { margin: 0; }
+#mappage #footer #flip-tracking { /*display:block;*/}
+#mappage #footer #flip-tracking-label {
+	display:inline-block;
+	margin-right: 5px;
+	margin-bottom: 0px;
+}
+#mappage #footer #tracking-status-icon {
+	display:inline-block;
+	opacity:0.5;
+}
+/* Ultra mini slider */
+#mappage #footer div.ui-slider { margin-right: 0; }
+#mappage #footer div.ui-slider-switch.ui-slider-mini {
+	height: 22px; /* full height of device */
+	width: 3.5em; /* full width of device */
+}
+#mappage #footer .ui-slider-mini span.ui-slider-label {
+	font-size: 12px; /* on-off font size */
+	line-height: 22px; /* match full height*/
+}
+#mappage #footer div.ui-slider-switch.ui-slider-mini .ui-slider-inneroffset {/* the handle nob container */ margin: 0 9px 0 15px; }
+#mappage #footer div.ui-slider-switch.ui-slider-mini .ui-slider-handle { /* the handle nob */
+	height: 20px; /* height of round thing */
+	margin: 0px 0 0 -14px;
+	width: 20px; /* width of round thing */
+}
+#mappage #footer div.ui-slider-switch.ui-slider-mini a.ui-slider-handle .ui-btn-inner { /* text inside the round handle thing */
+	height: 20px;
+	margin: 0;
+	padding: 0;
+	width: 20px;
+}
+/* DNC Page */
+#dncpage #dnclist { padding: 0; }
+#dncpage #dnclist li{padding-left:35px; position:relative; line-height:35px;}
+#dncpage #dnclist a{ position:absolute; top:0; left:0; }
+#dncpage .ui-input-search { /*width: 85%; */ }
+.ui-footer,
+.ui-grid-a,
+.ui-grid-b,
+.ui-grid-c,
+.ui-grid-d { overflow: visible; }
+.align-right { text-align: right; }
 .markerwithlabel {
 	color: red;
 	background-color: white;
@@ -40,20 +96,17 @@ ul.styled span.middle{}
 	font-size: 10px;
 	font-weight: bold;
 	text-align: center;
-	padding:1px 3px;  
+	padding: 1px 3px;
 	border: 1px solid black;
 	white-space: nowrap;
 }
-
-
-/* DNC Page */
-#dncpage #dnclist{ padding:0;}
-#dncpage .ui-input-search { width: 95%; }
-
 /* places auto complete*/
-.pac-container:after { content:"" !important;}
-.pac-container{ font-size:70%;}
-.pac-item { white-space:normal; padding:5px;}
+.pac-container:after { content: "" !important; }
+.pac-container { font-size: 70%; }
+.pac-item {
+	white-space: normal;
+	padding: 5px;
+}
 /*.pac-container,
 .ui-body-c,
 .ui-body-c input,

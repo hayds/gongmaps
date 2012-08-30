@@ -1,3 +1,9 @@
+#Security
+AuthUserFile /home/a1682995/public_html/.htpasswd
+AuthType Basic
+AuthName "Please Authenticate"
+Require valid-user
+
 # Turn rewrite on
 RewriteEngine On
 # Set base to / else it tries to deliver the filepath ie www.litehouse.com.au/c:\wamp\www\the\rest\of\the\url.php

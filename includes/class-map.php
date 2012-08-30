@@ -88,7 +88,7 @@ class map {
 		$sql = "SELECT * FROM markers "
 			 . "WHERE mapno=".$this->mapno." "
 			 . "AND type='dnc' "
-			 . "ORDER BY street, streetno, subpremise;";
+			 . "ORDER BY street, 0+streetno, subpremise;"; //sweet SQL trick to sort varchar as number see http://www.codingforums.com/archive/index.php/t-100055.html
 		if ($results = $this->database->get_results($sql)){
 			foreach ( $results as $key => $val){
 				$dncmarkers[] = new marker(
