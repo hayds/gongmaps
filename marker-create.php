@@ -2,7 +2,7 @@
 /**
  * @ File: update-marker.php
  * @ Created: 29-03-2012
- * @ Last Updated: 24-05-2012
+ * @ Last Updated: 24-09-2012
  * @ Creator: Hadyn Dickson
  * @ Description: Used for ajax requests to save or update a marker for a map
  */
@@ -53,6 +53,7 @@ if (isset($_POST['postcode'])){
 }
 
 //gen sql
+//"update into" is supposed to either insert a new one if it doesnt exist or if it does meet an error based on the duplicate key blockno_key then to update that one so should never get a 404
 $sql = "INSERT INTO `markers` "
 	 . "(mapno, type, blockno, lat, lng, subpremise, streetno, street, suburb, state, postcode) "
 	 . "VALUES "
@@ -61,6 +62,6 @@ $sql = "INSERT INTO `markers` "
 if(!$result=$DB->query($sql)){
 	header("HTTP/1.0 500 Error");
 	error($DB->get_error());
-} //update into is supposed to either insert a new one if it doesnt exist or if it does meet an error based on the duplicate key blockno_key then to update that one so should never get a 404
+} 
 
 echo mysql_insert_id();

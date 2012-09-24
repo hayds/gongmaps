@@ -2,7 +2,7 @@
 /**
  * @ File: config.php
  * @ Created: 29-03-2012
- * @ Last Updated: 30-08-2012
+ * @ Last Updated: 24-09-2012
  * @ Creator: Hadyn Dickson
  * @ Description: Main configuration file for the server.
  * @ Use: Specifies database connection defaults and site wide constants
@@ -15,7 +15,7 @@
 
 define('APPNAME', 'Gongmaps');
 
-define('VERSION', '1.5');
+define('VERSION', '1.6');
  
 // Set ROOT to current directory of this file
 define('ROOT', dirname(__FILE__));

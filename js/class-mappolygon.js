@@ -1,6 +1,7 @@
 function mapPolygon(opt_options) {
   var options = opt_options || {};
   this.setValues(options);
+	this.setListeners();
 }
 mapPolygon.prototype = new google.maps.Polygon();
 window['mapPolygon'] = mapPolygon;
@@ -14,7 +15,7 @@ mapPolygon.prototype.getBounds = function() {
 };
 mapPolygon.prototype['getBounds'] = mapPolygon.prototype.getBounds;
 
-mapPolygon.prototype.save = function(mapno) {
+mapPolygon.prototype.save = function() {
 	var that=this;//Closures... got to love em
 	if (isNaN(mapno) || mapno=='' || mapno==null) {
 		mapno = prompt("Map No:","");

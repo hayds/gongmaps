@@ -2,6 +2,7 @@
 /**
  * @ File: class-map.php
  * @ Created: 22-05-2012
+ * @ Last Updated: 24-09-2012
  * @ Creator: Hadyn Dickson
  * @ Description: Map class
  */
@@ -145,6 +146,7 @@ class map {
 		foreach ($blockmarkers as $blockmarker){	
 			echo "var position=new google.maps.LatLng(".$blockmarker->getLat().",".$blockmarker->getLng().");\n"
 			   . "var blockmarker = new BlockMarker({\n"
+ 			   . "	sysid: ".$blockmarker->getSysID().",\n"
 			   . "	position: position,\n"
 			   . "	map: myMap,\n"
 			   . "	mapno: '".$this->mapno."',\n"
@@ -155,10 +157,7 @@ class map {
 			   . "	content: '".$blockmarker->getBlockMarkup()."',\n"
 			   . "	editable: ".$blockmarker->getEditable()."\n"
 			   . "});\n"
-			   . "blockmarker.setMap(myMap);\n"
-			   . "google.maps.event.addListener(blockmarker, 'dragend', function() {\n"
-			   . "	this.update();\n"
-			   . "});\n";
+			   . "blockmarker.setMap(myMap);\n";
 		}
 	}
 

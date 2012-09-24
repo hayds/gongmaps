@@ -15,7 +15,7 @@ function createCurrentLocationMarker(point){
 	var marker = new google.maps.Marker({
 		draggable: false,
 		raiseOnDrag: false,
-		icon: image, 
+		icon: image,
 		shape: shape,
 		map: myMap,
 		position: point

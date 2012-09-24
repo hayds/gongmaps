@@ -13,6 +13,15 @@
 .clearfix { display: block; }
 /* close commented backslash hack */
 
+/*Master map*/
+#master { font-family:Arial, Helvetica, sans-serif; font-size:12px; }
+#master h1 { font-size:16px; }
+
+#master span.icon{ height: 16px; overflow: hidden; position: relative;  display:inline-block; width:16px; background-image:url('/images/drawing.png');}
+#master span.polygon{ background-position:0px -64px;}
+#master span.marker{ background-position:0px -176px;}
+#master span.hand{ background-position:0px -144px;}
+
 /* Styled List */
 ul.styled {
 	list-style: none;
@@ -20,6 +29,7 @@ ul.styled {
 }
 ul.styled li { }
 ul.styled span.middle { }
+
 /* Map Page */
 #mappage .ui-content { padding: 0; }
 #mappage .ui-content #gmap_canvas {
@@ -34,7 +44,7 @@ ul.styled span.middle { }
 }
 #mappage .ui-footer .ui-block-b { text-align: right; }
 #mappage .ui-footer .ui-block-b .ui-slider { margin-right: 0px; }
-#mappage .blockno {
+.blockno {
 	font-family: Arial !important;
 	font-weight: bold;
 	color: #000;
@@ -56,6 +66,7 @@ ul.styled span.middle { }
 	display:inline-block;
 	opacity:0.5;
 }
+
 /* Ultra mini slider */
 #mappage #footer div.ui-slider { margin-right: 0; }
 #mappage #footer div.ui-slider-switch.ui-slider-mini {
@@ -78,6 +89,7 @@ ul.styled span.middle { }
 	padding: 0;
 	width: 20px;
 }
+
 /* DNC Page */
 #dncpage #dnclist { padding: 0; }
 #dncpage #dnclist li{padding-left:35px; position:relative; line-height:35px;}
@@ -100,6 +112,7 @@ ul.styled span.middle { }
 	border: 1px solid black;
 	white-space: nowrap;
 }
+
 /* places auto complete*/
 .pac-container:after { content: "" !important; }
 .pac-container { font-size: 70%; }
@@ -107,26 +120,3 @@ ul.styled span.middle { }
 	white-space: normal;
 	padding: 5px;
 }
-/*.pac-container,
-.ui-body-c,
-.ui-body-c input,
-.ui-body-c select,
-.ui-body-c textarea,
-.ui-body-c button {
-	font-family: Helvetica, Arial, sans-serif ;
-}
-
-.pac-container,
-.ui-body-c,
-.ui-overlay-c {
-	border: 1px solid 		#aaa ;
-	color: 					#333333 ;
-	text-shadow: 0  1px  0  #fff ;
-	background: 			#f9f9f9 ;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #f9f9f9 ), to( #eeeeee )); 
-	background-image: -webkit-linear-gradient( #f9f9f9 , #eeeeee ); 
-	background-image:    -moz-linear-gradient( #f9f9f9 , #eeeeee ); 
-	background-image:     -ms-linear-gradient( #f9f9f9 , #eeeeee ); 
-	background-image:      -o-linear-gradient( #f9f9f9 , #eeeeee ); 
-	background-image:         linear-gradient( #f9f9f9 , #eeeeee );
-}*/

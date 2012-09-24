@@ -9,16 +9,14 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 ?>
 <!DOCTYPE html> 
 <html> 
-	<head> 
+	<head>
+  <meta charset="utf-8">
 	<title><?php echo APPNAME; ?> <?php echo VERSION; ?> - Master</title>
 	<link rel="stylesheet" href="/css/site.css" />    
 	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry,drawing" type="text/javascript"></script>
 	<script src="/js/class-blockmarker.js"></script>
 	<script src="/js/class-mappolygon.js"></script>    
-	<style type="text/css">
-		
-	</style>
 	<script type="text/javascript">	
 	// Declare global variables
 	var myMap;
@@ -27,7 +25,7 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	
 	// Set up the Drawing Manager Object
 	var drawingManager = new google.maps.drawing.DrawingManager({
-		drawingMode: google.maps.drawing.OverlayType.<?php echo isset($map) ? 'MARKER' : 'POLYGON'; ?>,
+		drawingMode: google.maps.drawing.OverlayType.<?php echo isset($map) ? 'null' : 'POLYGON'; ?>,
 		drawingControlOptions: {
 			position: google.maps.ControlPosition.TOP_RIGHT,
 			drawingModes: [
@@ -97,7 +95,7 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	
 	google.maps.event.addListener(drawingManager, 'markercomplete', function(marker) {
 		convertMarker(marker);
-		marker.setMap();
+		marker.setMap(); // delete the original google marker as we have just made a pimped version
 	});
 	
 	// Boot it
@@ -107,7 +105,21 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	</script>
 </head> 
 
-<body> 
+<body id="master">
+	<div>
+  	<h1>Instructions</h1>
+    <div>
+    	<ol class="styled">
+      	<li>Click the polygon button <span class="icon polygon"></span> to draw the boundaries of the map, when you join the line back to its beginning it will prompt you for a map number and save the map</li>
+        <li>Click the marker button <span class="icon marker"></span> to place block markers, it will prompt for a block number </li>
+    	</ol>
+      <div>
+      	<p>
+        	<em>NB: You can have more than one of the same block number. You can drag block numbers around using the hand tool <span class="icon hand"></span></em>
+        </p>
+      </div>
+    </div>
+  </div>
 	<div id="gmap_canvas" style="height:800px; width:100%;"></div>
 </body>
 </html>

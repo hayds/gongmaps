@@ -41,12 +41,12 @@ class db {
 		
 	// Connect to MYSQL
 	function db_connect() {		
-		$this->dbh = mysql_connect( $this->dbhost, $this->dbuser, $this->dbpassword, true );	
-		$this->clear_error();
+		$this->dbh = mysql_connect( $this->dbhost, $this->dbuser, $this->dbpassword, true );
 		if (!$this->dbh) {			
 			$this->set_error('Could not connect to database: ' . mysql_error());
 			return false;
 		} else {
+			$this->clear_error();
 			$this->select_db( $this->dbname, $this->dbh );
 			return true;
 		}
@@ -54,23 +54,23 @@ class db {
 	}
 	
 	// Select a database from MYSQL
-	function select_db( $dbname, $dbh ) {
-		$this->clear_error();
+	function select_db( $dbname, $dbh ) {		
 		if (!mysql_select_db( $dbname, $dbh )) {
 			$this->set_error('Could not select database: ' . mysql_error());
 			return false;
-		} else {			
+		} else {
+			$this->clear_error();			
 			return true;
 		}
 	}
 	
 	// Perform query and store results in the result var, returns amount of rows affected
-	function query( $sql ) {
-			$this->clear_error();
+	function query( $sql ) {			
 		if (!$this->result = mysql_query( $sql )) {
 			$this->set_error(mysql_error() . ' ' . $sql);
 			return false;
 		} else {	
+		  $this->clear_error();
 			$this->rows = mysql_affected_rows();
 			return $this->rows;
 		}
@@ -78,22 +78,22 @@ class db {
 	
 	// return just one row of a query NB prob should just delete this as i cant see a purppose for it, might as well use the below function
 	function get_result( $sql ) {
-		$this->clear_error();		
 		if (!$this->query( $sql )){
 			$this->set_error(mysql_error() . ' ' . $sql);
 			return false;
 		} else {
+			$this->clear_error();
 			return mysql_fetch_assoc($this->result);	
 		}
 	}
 	
 	// return an assoc array of the results
-	function get_results( $sql ) {
-		$this->clear_error();
+	function get_results( $sql ) {		
 		if (!$this->query( $sql )){
 			$this->set_error(mysql_error() . ' ' . $sql);
 			return false;
 		} else {
+			$this->clear_error();
 			$result = array();			
 			while($row = mysql_fetch_assoc($this->result))
 			{

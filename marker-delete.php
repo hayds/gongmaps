@@ -2,7 +2,7 @@
 /**
  * @ File: delete-marker.php
  * @ Created: 06-06-2012
- * @ Last Updated: 06-06-2012
+ * @ Last Updated: 24-09-2012
  * @ Creator: Hadyn Dickson
  * @ Description: Used for ajax requests to delete a marker for a map
  */
@@ -52,6 +52,5 @@ if ($sysid){
 
 
 if(!$result=$DB->query($sql)){
-	header("HTTP/1.0 500 Error");
-	error($DB->get_error() . $sql);
+	error($DB->get_error(),500,"SQL Error");
 }

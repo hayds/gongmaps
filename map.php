@@ -11,7 +11,8 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 ?>
 <!DOCTYPE html>
 <html>
-	<head> 
+	<head>
+  <meta charset="utf-8">
 	<title>Map <?php echo $map->getMapno(); ?></title>
   <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -37,7 +38,7 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 		  panControl: false,
 		  zoomControl: false,
 		  scaleControl: false,
-	  	  streetViewControl: false,
+	  	streetViewControl: false,
 		  overviewMapControl: false,		  
 		  mapTypeId: google.maps.MapTypeId.ROADMAP
 	    };
@@ -55,7 +56,6 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	// zooms and centers the map to fit the current polygon and your current location if tracking is on
 	// assumes polygon, mybounds and currentLatLng exist
 	function update_bounds(){
-		console.log('update_bounds called');
 		myBounds = polygon.getBounds();		
 		if (currentLocationMarker){ // if we are tracking the location add it
 			myBounds.extend(currentLatLng); // update the bounds with the current location

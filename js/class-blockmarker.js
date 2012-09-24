@@ -26,6 +26,10 @@ function BlockMarker(opt_options) {
    */
   this.dragging_ = false;
 
+	if (opt_options['sysid'] == undefined) {
+    opt_options['sysid'] = "";
+  }
+	
   if (opt_options['visible'] == undefined) {
     opt_options['visible'] = true;
   }
@@ -53,12 +57,18 @@ function BlockMarker(opt_options) {
   if (opt_options['fontsize'] == undefined) {
     opt_options['fontsize'] = "";
   }
-    
+	    
   this.setValues(options);
 }window['BlockMarker'] = BlockMarker;
 BlockMarker.prototype = new google.maps.OverlayView();
 
+/*SYSID*/
 
+//Get
+BlockMarker.prototype.getSysID = function() {
+  return (this.get('sysid')); // @type {number} 
+};
+BlockMarker.prototype['getSysID'] = BlockMarker.prototype.getSysID;
 
 /*VISIBLE*/
 
@@ -276,7 +286,8 @@ BlockMarker.prototype['anchor_changed'] = BlockMarker.prototype.anchor_changed;
 /*REMOVE*/
 
 BlockMarker.prototype.remove = function() {
-	var data = 'mapno=' + this.mapno + '&blockno=' + this.blockno + '&lat=' + this.getPosition().lat() + '&lng=' + this.getPosition().lng();
+	var data = 'sysid=' + this.sysid;
+	//var data = 'mapno=' + this.mapno + '&blockno=' + this.blockno + '&lat=' + this.getPosition().lat() + '&lng=' + this.getPosition().lng();
 	var that=this;
 	$.ajax({
 		url: '/marker-delete.php',
@@ -297,11 +308,15 @@ BlockMarker.prototype.save = function() {
 		return;
 	}
 	var data = 'mapno=' + this.mapno + '&type=block' + '&blockno=' + this.blockno + '&lat=' + this.getPosition().lat() + '&lng=' + this.getPosition().lng();
+	var that=this;
 	$.ajax({
-		url: '/create-marker.php',
+		url: '/marker-create.php',
 		type: 'POST',
 		data: data,
-		success: function(){},
+		success: function(response){
+			//"response" comes from marker-create.php and is just the sysid of the block in the db
+			that.sysid=response;
+			},
 		error: function(){alert('error');}	
 	});
 };
@@ -311,17 +326,17 @@ BlockMarker.prototype['save'] = BlockMarker.prototype.save;
 /*UPDATE*/
 
 BlockMarker.prototype.update = function() {
-	if (isNaN(mapno) || mapno=='' || mapno==null) {
+  if (isNaN(mapno) || mapno=='' || mapno==null) {
 		alert('A map number has not been set yet!');
 		return;
 	}
-	var data = 'mapno=' + this.mapno + '&type=block' + '&blockno=' + this.blockno + '&lat=' + this.getPosition().lat() + '&lng=' + this.getPosition().lng();
+	var data = 'sysid=' + this.sysid + '&lat=' + this.getPosition().lat() + '&lng=' + this.getPosition().lng();
 	$.ajax({
 		url: '/marker-update.php',
 		type: 'POST',
 		data: data,
 		success: function(){},
-		error: function(){alert('error');}	
+		error: function(){}	
 	});
 };
 BlockMarker.prototype['update'] = BlockMarker.prototype.update;
@@ -751,20 +766,21 @@ BlockMarker.prototype.onAdd = function() {
 		});
 	}
 
-    google.maps.event.addDomListener(this.markerContent_, 'click', function(e) {
-      google.maps.event.trigger(that, 'click');
-    });
-    google.maps.event.addDomListener(this.markerContent_, 'mouseover', function(e) {
-      google.maps.event.trigger(that, 'mouseover');
-    });
-    google.maps.event.addDomListener(this.markerContent_, 'mouseout', function(e) {
-      google.maps.event.trigger(that, 'mouseout');
-    });
+	google.maps.event.addDomListener(this.markerContent_, 'click', function(e) {
+		google.maps.event.trigger(that, 'click');
+	});
+	google.maps.event.addDomListener(this.markerContent_, 'mouseover', function(e) {
+		google.maps.event.trigger(that, 'mouseover');
+	});
+	google.maps.event.addDomListener(this.markerContent_, 'mouseout', function(e) {
+		google.maps.event.trigger(that, 'mouseout');
+	});
 	google.maps.event.addListener(this.map, 'zoom_changed', function() {
 	  that.zoom_changed();
 	});
+	
 	google.maps.event.addListener(this, 'dragend', function() {
-	  that.update();
+	  that.update();		
 	});
 
   }
@@ -775,11 +791,11 @@ BlockMarker.prototype.onAdd = function() {
   this.draggable_changed();
   this.zoom_changed();
   var panes = this.getPanes();
-  if (panes) {  
-  	panes.overlayLayer.appendChild(this.markerWrapper_);
-	if (this.mydeletebutton){
-		panes.overlayLayer.appendChild(this.mydeletebutton);
-	}
+  if (panes) {  //https://developers.google.com/maps/documentation/javascript/reference#MapPanes
+  	panes.overlayMouseTarget.appendChild(this.markerWrapper_);
+		if (this.mydeletebutton){
+			panes.overlayMouseTarget.appendChild(this.mydeletebutton);
+		}
   }
 
   google.maps.event.trigger(this, 'ready');

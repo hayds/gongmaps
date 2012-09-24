@@ -9,7 +9,8 @@ RewriteEngine On
 # Set base to / else it tries to deliver the filepath ie www.litehouse.com.au/c:\wamp\www\the\rest\of\the\url.php
 RewriteBase  /
 RewriteRule ^map/([0-9]+)/.*$ map.php?mapno=$1 [L,QSA]
-RewriteRule ^master/([0-9]+)/.*$ master.php?mapno=$1 [L,QSA]
+RewriteRule ^master/([0-9]+)/*$ master.php?mapno=$1 [L,QSA]
+RewriteRule ^master/$ master.php [L,QSA]
 
 #
 RewriteRule ^([a-z]+)$ $1.php [L,QSA]
