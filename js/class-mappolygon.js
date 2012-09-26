@@ -1,7 +1,6 @@
 function mapPolygon(opt_options) {
   var options = opt_options || {};
-  this.setValues(options);
-	this.setListeners();
+  this.setValues(options);	
 }
 mapPolygon.prototype = new google.maps.Polygon();
 window['mapPolygon'] = mapPolygon;

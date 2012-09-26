@@ -22,7 +22,7 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script src="/min/f=js/jquery.mobile-1.1.0.js"></script>
   <script src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry,places" type="text/javascript"></script>
-	<script src="/min/f=js/functions.js,js/class-mappolygon.js,js/class-blockmarker.js,js/class-dncmarker.js&debug=1"></script>
+	<script src="/min/f=js/functions.js,js/class-mappolygon.js,js/class-blockmarker.js,js/class-dncmarker.js"></script>
   <script type="text/javascript">
 	var myMap; 					// declare the map variable globally
 	var myBounds; 				// declare the bounds variable globally
@@ -44,8 +44,8 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	    };
     	myMap = new google.maps.Map(document.getElementById("gmap_canvas"),myOptions);
 		polygon.setMap(myMap);
-		<?php $map->genBlockMarkersJS(); ?>
-		<?php $map->genDNCMarkersJS(); ?>
+		<?php// $map->genBlockMarkersJS(); ?>
+		<?php// $map->genDNCMarkersJS(); ?>
 		update_bounds();
 	}
 	
@@ -56,6 +56,7 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	// zooms and centers the map to fit the current polygon and your current location if tracking is on
 	// assumes polygon, mybounds and currentLatLng exist
 	function update_bounds(){
+		console.log('update_bounds called');
 		myBounds = polygon.getBounds();		
 		if (currentLocationMarker){ // if we are tracking the location add it
 			myBounds.extend(currentLatLng); // update the bounds with the current location
@@ -67,7 +68,6 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	function updateLocation(position){
 		console.log('updateLocation called');
 		$("#tracking-status-icon").removeClass("ui-icon-check ui-icon-alert").addClass("ui-icon-search");
-		$("#tracking-status-icon").removeClass("ui-icon-search ui-icon-alert").addClass("ui-icon-check");
 		currentLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		if (!currentLocationMarker || currentLocationMarker==null ){ // if currentLocationMarker doesnt exist create it with the current latlng
 			currentLocationMarker = createCurrentLocationMarker(currentLatLng);
@@ -75,6 +75,7 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 		} else { // else just update its latlng
 			currentLocationMarker.setPosition(currentLatLng);
 		}
+		$("#tracking-status-icon").removeClass("ui-icon-search").addClass("ui-icon-check");
 	}
 	
 	// JQuery mobile equivalent to doc ready function
@@ -97,11 +98,11 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 					}
 				); 
 			} else { // must be off then
+				$("#tracking-status-icon").hide();
 				navigator.geolocation.clearWatch(locationChangedListener);
-				if (currentLocationMarker){
-					$("#tracking-status-icon").hide();
+				if (currentLocationMarker){				
 					currentLocationMarker.setMap();
-					currentLocationMarker=null;
+					currentLocationMarker=null; // check this for anything
 					update_bounds();
 				}
 			}					
@@ -254,7 +255,7 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
           <option value="off">Off</option>
           <option value="on">On</option>
       </select>
-      <span id="tracking-status-icon" class="ui-icon ui-icon-alert ui-icon-shadow">&nbsp;</span>
+      <span id="tracking-status-icon" class="ui-icon ui-icon-search ui-icon-shadow">&nbsp;</span>
 	</div><!-- /footer -->
 
 </div><!-- /page -->

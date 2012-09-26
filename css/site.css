@@ -60,7 +60,8 @@ ul.styled span.middle { }
 #mappage #footer #flip-tracking-label {
 	display:inline-block;
 	margin-right: 5px;
-	margin-bottom: 0px;
+	vertical-align: top;
+	margin-bottom: -5px;
 }
 #mappage #footer #tracking-status-icon {
 	display:inline-block;

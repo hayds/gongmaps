@@ -22,5 +22,5 @@ $sql = "REPLACE INTO maps "
 	 . ";";
 
 if (!$result=$DB->query($sql)){
-	error('nothing updated');
+	error($DB->get_error(),500,"SQL Error");
 }

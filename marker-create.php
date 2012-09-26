@@ -60,8 +60,7 @@ $sql = "INSERT INTO `markers` "
 	 . "('$mapno', '$type', '$blockno', '$lat', '$lng', '$subpremise', '$streetno', '$street', '$suburb', '$state', '$postcode');";
 
 if(!$result=$DB->query($sql)){
-	header("HTTP/1.0 500 Error");
-	error($DB->get_error());
+	error($DB->get_error(),500,"SQL Error");
 } 
 
 echo mysql_insert_id();

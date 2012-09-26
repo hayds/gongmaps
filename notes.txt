@@ -1,7 +1,2 @@
-master page make blocks work
-Speed it all up / optimnise for iphone cache etc
-
-Add pin lock, 3 attempts fails for 24 hrs
-list all streets within the polygon?
-//add loading graphic on update address list
-//lock down the editing/removal of dncs from the list with edit icon
+Create an installer for any conregation
+deal with dnc's that are not in google maps addressing system

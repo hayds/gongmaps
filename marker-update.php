@@ -27,6 +27,5 @@ $sql = "UPDATE `markers` "
 	 . ";";
 
 if(!$result=$DB->query($sql)){
-	header("HTTP/1.0 500 Error");
-	error($DB->get_error());
+	error($DB->get_error(),500,"SQL Error");
 } 

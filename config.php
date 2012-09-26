@@ -15,7 +15,7 @@
 
 define('APPNAME', 'Gongmaps');
 
-define('VERSION', '1.6');
+define('VERSION', '1.7');
  
 // Set ROOT to current directory of this file
 define('ROOT', dirname(__FILE__));
@@ -35,16 +35,16 @@ define('URL', $_SERVER['REQUEST_URI']);
  */
 
 // Database username 
-define('DB_USER', 'a1682995_gongmap');
+define('DB_USER', 'capcorco_gongmap');
 
 // Database password */
-define('DB_PASSWORD', 'quality99');
+define('DB_PASSWORD', 'quality');
 
 // Database name
-define('DB_NAME', 'a1682995_gongmap');
+define('DB_NAME', 'capcorco_gongmaps');
 
 // MySQL hostname
-define('DB_HOST', 'mysql14.000webhost.com');
+define('DB_HOST', 'localhost');
 
 // Include additional include files
 require_once(INCLUDES . '/class-db.php');

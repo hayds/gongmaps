@@ -42,8 +42,9 @@ class db {
 	// Connect to MYSQL
 	function db_connect() {		
 		$this->dbh = mysql_connect( $this->dbhost, $this->dbuser, $this->dbpassword, true );
-		if (!$this->dbh) {			
+		if (!$this->dbh) {
 			$this->set_error('Could not connect to database: ' . mysql_error());
+			error($DB->get_error(),500,"SQL Error");
 			return false;
 		} else {
 			$this->clear_error();
@@ -66,13 +67,17 @@ class db {
 	
 	// Perform query and store results in the result var, returns amount of rows affected
 	function query( $sql ) {			
-		if (!$this->result = mysql_query( $sql )) {
+		if (!$this->result = mysql_query( $sql )) { //change this to check for error not if a result came
 			$this->set_error(mysql_error() . ' ' . $sql);
 			return false;
 		} else {	
 		  $this->clear_error();
 			$this->rows = mysql_affected_rows();
-			return $this->rows;
+			if ($this->rows == 0){
+				return true;
+			} else {
+				return $this->rows;
+			}
 		}
 	}
 	

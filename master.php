@@ -15,8 +15,7 @@ if (isset($_REQUEST['mapno']) && $_REQUEST['mapno']!=''){
 	<link rel="stylesheet" href="/css/site.css" />    
 	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry,drawing" type="text/javascript"></script>
-	<script src="/js/class-blockmarker.js"></script>
-	<script src="/js/class-mappolygon.js"></script>    
+ 	<script src="/min/f=js/class-mappolygon.js,js/class-blockmarker.js"></script>
 	<script type="text/javascript">	
 	// Declare global variables
 	var myMap;

@@ -1,5 +1,5 @@
 #Security
-AuthUserFile /home/a1682995/public_html/.htpasswd
+AuthUserFile /home1/capcorco/public_html/gongmaps/.htpasswd
 AuthType Basic
 AuthName "Please Authenticate"
 Require valid-user
